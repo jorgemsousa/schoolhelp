@@ -88,6 +88,7 @@ export function Home() {
           ListEmptyComponent={() => (
             <Center mt={4}>
               <ChatTeardropText 
+                name="chat" 
                 size={40} 
                 color={colors.gray[300]} 
               />

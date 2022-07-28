@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 import Ionicons  from '@expo/vector-icons/Ionicons'
 import { MaterialIcons }  from '@expo/vector-icons'
-import { ChatTeardropText } from 'phosphor-react-native'
+import {} from 'ph'
 
 import Logo from '../../assets/logosecondary.svg'
 
@@ -87,7 +87,8 @@ export function Home() {
           contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
           ListEmptyComponent={() => (
             <Center mt={4}>
-              <ChatTeardropText 
+              <MaterialIcons 
+                name="chat" 
                 size={40} 
                 color={colors.gray[300]} 
               />

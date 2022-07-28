@@ -87,7 +87,8 @@ export function Home() {
           contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
           ListEmptyComponent={() => (
             <Center mt={4}>
-              <ChatTeardropText 
+              <MaterialIcons 
+                name="chat" 
                 size={40} 
                 color={colors.gray[300]} 
               />
