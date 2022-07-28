@@ -1,0 +1,1 @@
+import { Center, spinn } from "native-base";

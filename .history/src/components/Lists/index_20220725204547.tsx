@@ -1,0 +1,17 @@
+import { HStack, Text } from 'native-base';
+
+export type ListProps = {
+  
+}
+
+type Props = {
+
+}
+
+export function Index() {
+  return (
+    <HStack>
+      <Text></Text>
+    </HStack>
+  );
+}

@@ -1,0 +1,1 @@
+import { Center, sp } from "native-base";

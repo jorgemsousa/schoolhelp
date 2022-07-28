@@ -1,0 +1,14 @@
+import { Text, Button, IButtonProps, useTheme} from 'native-base';
+
+type Props = IButtonProps & {
+  title: string,
+  
+}
+
+export function Index() {
+  return (
+    <Button>
+
+    </Button>
+  );
+}
