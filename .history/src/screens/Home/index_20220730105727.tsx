@@ -9,9 +9,10 @@ import {
   FlatList,
   Center
 } from 'native-base';
-
+import Ionicons  from '@expo/vector-icons/Ionicons'
+import { MaterialIcons }  from '@expo/vector-icons'
 import { ChatTeardropText } from 'phosphor-react-native'
-import { SignOut } from 'phosphor-react-native'
+import {} from ''
 
 import Logo from '../../assets/logosecondary.svg'
 
@@ -41,7 +42,8 @@ export function Home() {
         <Logo />
         <IconButton 
           icon={
-            <SignOut 
+            <Ionicons 
+              name="md-exit-outline"
               size={26} 
               color={colors.gray[300]} 
             />

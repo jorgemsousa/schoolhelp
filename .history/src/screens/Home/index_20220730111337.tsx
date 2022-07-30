@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 
 import { ChatTeardropText } from 'phosphor-react-native'
-import { SignOut } from 'phosphor-react-native'
+import { S } from 'phosphor-react-native'
 
 import Logo from '../../assets/logosecondary.svg'
 
@@ -41,7 +41,7 @@ export function Home() {
         <Logo />
         <IconButton 
           icon={
-            <SignOut 
+            <ArrowsOutCardinal 
               size={26} 
               color={colors.gray[300]} 
             />

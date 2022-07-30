@@ -41,7 +41,7 @@ export function Home() {
         <Logo />
         <IconButton 
           icon={
-            <SignOut 
+            <ArrowsOutCardinal 
               size={26} 
               color={colors.gray[300]} 
             />
