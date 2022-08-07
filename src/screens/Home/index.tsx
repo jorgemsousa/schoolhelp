@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { 
   HStack, 
   IconButton, 
@@ -20,10 +21,26 @@ import { Button } from '../../components/Button'
 import { Lists, ListProps } from '../../components/Lists'
 
 export function Home() {
+  const navigation = useNavigation();
+
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-  const [orders, setOrders] = useState<ListProps[]>([
-    
+  const [students, setStudents] = useState<ListProps[]>([
+    {
+      id: "uuid",
+      name: "Jorge Sousa",
+      when: "01/01/2022",
+      status: 'open',
+      school: "UFS",
+      series: "5 Periodo",
+      notas: 4,
+      media: 6,
+      disciplinas: ["Portugues", "Matematica"],
+    },
   ])
+
+  function handleNewStudent() {
+    navigation.navigate("new");
+  }
 
   const { colors } = useTheme();
 
@@ -79,7 +96,7 @@ export function Home() {
           />
         </HStack>
         <FlatList 
-          data={orders}
+          data={students}
           keyExtractor={item => item.id}
           renderItem={({item}) => <Lists data={item} />}
           showsVerticalScrollIndicator={false}
@@ -102,7 +119,7 @@ export function Home() {
             </Center>
           )}
         />
-        <Button title="Novo Aluno"/>
+        <Button title="Novo Aluno" onPress={handleNewStudent}/>
       </VStack>
     </VStack>
   );
