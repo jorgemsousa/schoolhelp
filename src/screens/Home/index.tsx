@@ -42,6 +42,11 @@ export function Home() {
     navigation.navigate("new");
   }
 
+  
+  function handleOpenDetails(id: string) {
+    navigation.navigate('details', { id });
+  }
+
   const { colors } = useTheme();
 
   return (
@@ -98,7 +103,7 @@ export function Home() {
         <FlatList 
           data={students}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Lists data={item} />}
+          renderItem={({item}) => <Lists data={item} onPress={() => handleOpenDetails(item.id)} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
           ListEmptyComponent={() => (

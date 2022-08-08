@@ -1,7 +1,6 @@
 import { VStack, HStack, Text, Box, useTheme, Circle, Pressable, IPressableProps} from 'native-base';
 
 import { MaterialIcons }  from '@expo/vector-icons/'
-import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 export type ListProps = {
   id: string;
@@ -21,8 +20,8 @@ type Props = IPressableProps & {
 
 export function Lists({data, ...rest}: Props) {
   const { colors } = useTheme();
-
   const statusColor = data.status === 'open' ? colors.secondary[700] : colors.green[300]
+
 
   return (
     <Pressable { ...rest }>
