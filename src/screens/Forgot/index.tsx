@@ -6,8 +6,7 @@ import Image from '../../assets/image.svg';
 
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-
-import  Ionicons  from '@expo/vector-icons/Ionicons';
+import { Envelope } from 'phosphor-react-native';
 
 export function Forgot(){
   const [email, setEmail] = useState('');
@@ -28,8 +27,7 @@ export function Forgot(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-mail-outline" 
+              <Envelope 
                 color={colors.gray[300]} 
               />
             } 
