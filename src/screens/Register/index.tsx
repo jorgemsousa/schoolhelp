@@ -6,8 +6,7 @@ import Image from '../../assets/image.svg';
 
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-
-import  Ionicons  from '@expo/vector-icons/Ionicons';
+import { Envelope, Key, UserCirclePlus } from 'phosphor-react-native';
 
 export function Register(){
   const [name, setName] = useState('');
@@ -16,7 +15,7 @@ export function Register(){
   const { colors } = useTheme();
 
   return(
-    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={10} >
+    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={40} >
       <Logo />
       <Image />
       <Heading color="gray.100" fontSize="xl" mt={6} mb={6}>
@@ -30,8 +29,7 @@ export function Register(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-add-outline" 
+              <UserCirclePlus
                 color={colors.gray[300]} 
               />
             } 
@@ -47,8 +45,7 @@ export function Register(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-mail-outline" 
+              <Envelope
                 color={colors.gray[300]} 
               />
             } 
@@ -63,8 +60,7 @@ export function Register(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-key-outline" 
+              <Key
                 color={colors.gray[300]} 
               />
             } 

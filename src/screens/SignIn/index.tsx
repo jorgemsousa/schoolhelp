@@ -6,7 +6,7 @@ import Image from '../../assets/image.svg';
 
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-
+import { Envelope, Key } from 'phosphor-react-native';
 import  Ionicons  from '@expo/vector-icons/Ionicons';
 
 export function SignIn(){
@@ -14,8 +14,12 @@ export function SignIn(){
   const [password, setPassword] = useState('');
   const { colors } = useTheme();
 
+  function handleSignIn() {
+    console.log(email, password)
+  }
+
   return(
-    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={10} >
+    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={40} >
       <Logo />
       <Image />
       <Heading color="gray.100" fontSize="xl" mt={6} mb={6}>
@@ -29,8 +33,7 @@ export function SignIn(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-mail-outline" 
+              <Envelope
                 color={colors.gray[300]} 
               />
             } 
@@ -45,8 +48,7 @@ export function SignIn(){
         InputLeftElement={
           <Icon 
             as={
-              <Ionicons 
-                name="md-key-outline" 
+              <Key
                 color={colors.gray[300]} 
               />
             } 
@@ -58,7 +60,8 @@ export function SignIn(){
 
       <Button 
         title="Entrar"
-        w="full"        
+        w="full"   
+        onPress={handleSignIn}     
       />
       <HStack 
         mt={2}
