@@ -22,7 +22,17 @@ import { Lists, ListProps } from '../../components/Lists'
 export function Home() {
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
   const [orders, setOrders] = useState<ListProps[]>([
-    
+    {
+      id: '123456',
+      name: 'Jorge Sousa',
+      when: '2022',
+      status: 'open',
+      school: 'IFS',
+      series: '5º A',
+      notas: 4,
+      media: 6,
+      disciplinas: ['Portugues', 'Matematica']
+    }
   ])
 
   const { colors } = useTheme();

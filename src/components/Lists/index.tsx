@@ -1,8 +1,15 @@
-import { VStack, HStack, Text, Box, useTheme, Circle, Pressable, IPressableProps} from 'native-base';
+import { 
+  VStack, 
+  HStack, 
+  Text, 
+  Box, 
+  useTheme, 
+  Circle, 
+  Pressable, 
+  IPressableProps
+} from 'native-base';
 
-import { MaterialIcons }  from '@expo/vector-icons/'
-import { color } from 'native-base/lib/typescript/theme/styled-system';
-
+import { ClockAfternoon, Hourglass, CircleWavyCheck } from 'phosphor-react-native';
 export type ListProps = {
   id: string;
   name: string;
@@ -41,7 +48,7 @@ export function Lists({data, ...rest}: Props) {
             Aluno: {data.name}
           </Text>
           <HStack alignItems="center" flex={1}>
-            <MaterialIcons name='access-time' color={colors.gray[300]}/>
+            <ClockAfternoon color={colors.gray[300]}/>
             <Text color="gray.200" fontSize="xs" ml={1}>
                 {data.when}
             </Text>
@@ -50,8 +57,8 @@ export function Lists({data, ...rest}: Props) {
         <Circle bg="gray.500" h={12} w={12} mr={5}>
           {
             data.status === 'closed' ? 
-              <MaterialIcons name="check-circle-outline" color={statusColor} /> : 
-              <MaterialIcons name="hourglass-bottom" color={statusColor} />
+              <CircleWavyCheck color={statusColor} /> : 
+              <Hourglass color={statusColor} />
           }
         </Circle>
       </HStack>

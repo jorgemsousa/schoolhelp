@@ -7,7 +7,6 @@ import Image from '../../assets/image.svg';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { Envelope, Key } from 'phosphor-react-native';
-import  Ionicons  from '@expo/vector-icons/Ionicons';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
