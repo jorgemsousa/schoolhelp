@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { 
   HStack, 
   IconButton, 
@@ -20,20 +21,31 @@ import { Button } from '../../components/Button'
 import { Lists, ListProps } from '../../components/Lists'
 
 export function Home() {
+  const navigation = useNavigation();
+
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-  const [orders, setOrders] = useState<ListProps[]>([
+  const [students, setStudents] = useState<ListProps[]>([
     {
-      id: '123456',
-      name: 'Jorge Sousa',
-      when: '2022',
+      id: "uuid-123-5467",
+      name: "Jorge Sousa",
+      when: "01/01/2022",
       status: 'open',
-      school: 'IFS',
-      series: '5º A',
+      school: "UFS",
+      series: "5 Periodo",
       notas: 4,
       media: 6,
-      disciplinas: ['Portugues', 'Matematica']
-    }
+      disciplinas: ["Portugues", "Matematica"],
+    },
   ])
+
+  function handleNewStudent() {
+    navigation.navigate("new");
+  }
+
+  
+  function handleOpenDetails(id: string) {
+    navigation.navigate('details', { id });
+  }
 
   const { colors } = useTheme();
 
@@ -68,10 +80,10 @@ export function Home() {
           alignItems="center"
         >
           <Heading color="gray.100">
-            Lista de Alunos
+            Alunos
           </Heading>
           <Text color="gray.200">
-            0
+            {students.length}
           </Text>
         </HStack>
         <HStack space={3}>
@@ -89,9 +101,9 @@ export function Home() {
           />
         </HStack>
         <FlatList 
-          data={orders}
+          data={students}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Lists data={item} />}
+          renderItem={({item}) => <Lists data={item} onPress={() => handleOpenDetails(item.id)} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
           ListEmptyComponent={() => (
@@ -112,7 +124,7 @@ export function Home() {
             </Center>
           )}
         />
-        <Button title="Novo Aluno"/>
+        <Button title="Novo Aluno" onPress={handleNewStudent}/>
       </VStack>
     </VStack>
   );

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import  auth from '@react-native-firebase/auth';
 import { VStack, Heading, Icon, useTheme, Text, HStack } from "native-base";
 
 import Logo from '../../assets/logo_primary_.svg';
@@ -7,6 +8,7 @@ import Image from '../../assets/image.svg';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { Envelope, Key } from 'phosphor-react-native';
+import { Alert } from 'react-native';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
@@ -14,6 +16,11 @@ export function SignIn(){
   const { colors } = useTheme();
 
   function handleSignIn() {
+
+    if(!email || !password){
+      return Alert.alert("Login", "E-mail e/ou Senha são obrigatórios")
+    }
+
     console.log(email, password)
   }
 
