@@ -8,8 +8,10 @@ import {
   Text, 
   Heading, 
   FlatList,
-  Center
+  Center,
 } from 'native-base';
+import auth from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 
 import { ChatTeardropText } from 'phosphor-react-native'
 import { SignOut } from 'phosphor-react-native'
@@ -47,6 +49,14 @@ export function Home() {
     navigation.navigate('details', { id });
   }
 
+  function handleLogout(){
+    auth()
+      .signOut()
+      .catch(error => {
+        return Alert.alert('Sair', 'Houve um erro ao sair.')
+      })
+  }
+
   const { colors } = useTheme();
 
   return (
@@ -68,6 +78,7 @@ export function Home() {
               color={colors.gray[300]} 
             />
           }
+          onPress={handleLogout}
         />
       </HStack>
       
