@@ -30,7 +30,7 @@ export function Home() {
     {
       id: "uuid-123-5467",
       name: "Jorge Sousa",
-      when: "01/01/2022",
+      when: "2022",
       status: 'open',
       school: "UFS",
       series: "5 Periodo",

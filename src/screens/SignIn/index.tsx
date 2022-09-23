@@ -30,10 +30,12 @@ export function SignIn(){
     auth().signInWithEmailAndPassword(email, password)
     .then((result) => {
       setIsLoading(false);
+      clearCredentials();
     })
     .catch((error) => {
       Alert.alert('SignIn', 'E-mail ou Senha Inválidos.');
       setIsLoading(false);
+      clearCredentials();
     })
   }
 
@@ -45,6 +47,10 @@ export function SignIn(){
     navigation.navigate('forgot')
   }
 
+  function clearCredentials(){
+    setPassword('')
+    setEmail('')
+  }
 
   return(
     <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={20} >
@@ -58,6 +64,7 @@ export function SignIn(){
         mb={4}
         placeholder="E-mail"
         onChangeText={setEmail}
+        value={email}
         InputLeftElement={
           <Icon 
             as={
@@ -72,6 +79,7 @@ export function SignIn(){
       <Input 
         mb={8}
         placeholder="Senha"
+        value={password}
         onChangeText={setPassword}
         InputLeftElement={
           <Icon 
@@ -98,7 +106,7 @@ export function SignIn(){
         justifyContent="space-between" 
       >
         <Text 
-          color="fuchsia.100" 
+          color="fuchsia.500" 
           fontSize={11} 
           onPress={handleNewRegister}
         >
@@ -106,7 +114,7 @@ export function SignIn(){
         </Text>
         
         <Text 
-          color="gray.100" 
+          color="fuchsia.500" 
           fontSize={11} 
           onPress={handleForgot}
         >
