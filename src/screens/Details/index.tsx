@@ -1,10 +1,23 @@
 import { useRoute } from "@react-navigation/native";
-import { Heading, HStack, VStack, useTheme } from "native-base";
+import { 
+    Heading, 
+    HStack, 
+    VStack, 
+    useTheme, 
+    ScrollView 
+} from "native-base";
 
-import { ClockAfternoon, Hourglass, CircleWavyCheck } from 'phosphor-react-native';
+import { 
+    Hourglass, 
+    CircleWavyCheck, 
+    User,
+    ListChecks
+} from 'phosphor-react-native';
 
 import { Header } from "../../components/Header";
-import { Button } from '../../components/Button'
+import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
+import { ButtonSecondary } from '../../components/ButtonSecondary';
 
 
 type RouteParams = {
@@ -17,8 +30,21 @@ export function Details() {
 
     const { id } = route.params as RouteParams;
 
+    const userFake = {
+        id: "uuid-123-5467",
+        name: "Jorge Sousa",
+        when: "2022",
+        status: 'open',
+        school: "UFS",
+        series: "5 Periodo",
+        notas: 4,
+        media: 6,
+        disciplinas: ["Portugues", "Matematica"],
+    }
+    
+
    return(
-    <VStack flex={1} bg="gray.700">
+    <VStack flex={1} bg="gray.700" >
         <Header title="Acompanhamento" />
         <HStack w="full" bg="gray.500" p={3} justifyContent="center" alignItems="center" space={2}>
             <Hourglass color={colors.secondary[700]}/>
@@ -26,18 +52,72 @@ export function Details() {
                 EM ANDAMENTO
             </Heading>
         </HStack>
-        <VStack paddingX={2}>
-            <HStack w="full" mt={3} p={5} bg="gray.600" justifyContent="center"> 
-                <Heading color="amber.200">TESTE</Heading>
-            </HStack>
-            <HStack w="full" mt={3} p={20} bg="gray.600" justifyContent="center"> 
-                <Heading color="amber.200">TESTE</Heading>
-            </HStack>
-            <HStack w="full" mt={3} p={20} bg="gray.600" justifyContent="center"> 
-                <Heading color="amber.200">TESTE</Heading>
-            </HStack>
-            <Button title="Fechar" mt={12}/>   
-        </VStack>
+        <ScrollView >
+            <VStack paddingX={3}>
+                <VStack w="full" mt={3} p={5} bg="gray.600">
+                    <HStack w="full" alignItems="center" space={2}> 
+                        <User color="purple" size={15}/>
+                        <Heading color="gray.300" fontSize={12} >ALUNO</Heading>
+                    </HStack>
+                    <Heading color="gray.100" fontSize={14} mt={1}>{userFake.name.toUpperCase()}</Heading>
+                </VStack>
+                <VStack w="full" mt={3} p={5} bg="gray.600">
+                    <HStack w="full" alignItems="center" space={2}> 
+                        <ListChecks color="purple" size={15}/>
+                        <Heading color="gray.300" fontSize={12} >DISCIPLINAS</Heading>
+                    </HStack>
+                    {userFake.disciplinas.map((item) => 
+                        <ButtonSecondary title={item.toUpperCase()}  state={false} key={item} />
+                    )}
+                    
+                </VStack>
+                <HStack w="full" mt={3} p={5} bg="gray.600" space={2}> 
+                        <CircleWavyCheck color="purple" size={15}/>
+                        <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
+                </HStack>
+                <VStack w="full" mt={3} p={5} bg="gray.600">
+                    <Heading color="gray.300" fontSize={12} >Nota</Heading>
+                    <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
+                        <Input 
+                            mb={4}
+                            placeholder="Atividades"                    
+                            w={110}                   
+                        />
+                        <Input 
+                            mb={4}
+                            placeholder="Nota" 
+                            w={110}                   
+                        />
+                        <Input 
+                            mb={4}
+                            placeholder="Total"                    
+                            w={110}               
+                        />
+                    </HStack>
+                
+                    <Heading color="gray.300" fontSize={12} >Nota</Heading>
+                    <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
+                        <Input 
+                            mb={4}
+                            placeholder="Atividades"                    
+                            w={110}                   
+                        />
+                        <Input 
+                            mb={4}
+                            placeholder="Nota" 
+                            w={110}                   
+                        />
+                        <Input 
+                            mb={4}
+                            placeholder="Total"                    
+                            w={110}                   
+                        />
+                    </HStack>
+                    
+                </VStack>
+                <Button title="Fechar" mt={4} mb={4}/>   
+            </VStack>
+        </ScrollView>
     </VStack>
    ) 
 }

@@ -3,7 +3,6 @@ import {
     HStack, 
     IconButton, 
     useTheme, 
-    Text,
     ScrollView
 } from "native-base";
 import { useState } from "react";
