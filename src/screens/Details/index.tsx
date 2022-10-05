@@ -48,7 +48,6 @@ export function Details() {
     const listNotes = () => {
        
         for (let i = 1; i <= userFake.notas; i++) {
-             r
             <>
                 <Heading color="gray.300" fontSize={12} >Nota {i}</Heading>
                 <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
