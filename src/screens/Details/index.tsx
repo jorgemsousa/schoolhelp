@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { 
     Heading, 
@@ -30,6 +31,8 @@ export function Details() {
 
     const { id } = route.params as RouteParams;
 
+    const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
+
     const userFake = {
         id: "uuid-123-5467",
         name: "Jorge Sousa",
@@ -42,28 +45,64 @@ export function Details() {
         disciplinas: ["Portugues", "Matematica"],
     }
     
+    const listNotes = () => {
+       
+        for (let i = 1; i <= userFake.notas; i++) {
+             r
+            <>
+                <Heading color="gray.300" fontSize={12} >Nota {i}</Heading>
+                <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
+                    <Input 
+                        mb={4}
+                        placeholder="Atividades"                    
+                        w={110}                   
+                    />
+                    <Input 
+                        mb={4}
+                        placeholder="Nota" 
+                        w={110}                   
+                    />
+                    <Input 
+                        mb={4}
+                        placeholder="Total"                    
+                        w={110}               
+                    />
+                </HStack> 
+            </>
+        }
+    }
 
-   return(
+    return(
     <VStack flex={1} bg="gray.700" >
         <Header title="Acompanhamento" />
         <HStack w="full" bg="gray.500" p={3} justifyContent="center" alignItems="center" space={2}>
-            <Hourglass color={colors.secondary[700]}/>
-            <Heading color={colors.secondary[700]} fontSize={14} >
-                EM ANDAMENTO
-            </Heading>
+            { statusSelected === 'open' ? 
+            <>
+                <Hourglass color={colors.secondary[700]}/> 
+                <Heading color={colors.secondary[700]} fontSize={14} >
+                    EM ANDAMENTO
+                </Heading> 
+            </> : 
+            <>
+                <CircleWavyCheck color={colors.green[500]}/>    
+                <Heading color={colors.green[500]} fontSize={14} >
+                    ENCERRADO
+                </Heading>
+            </>
+            }            
         </HStack>
         <ScrollView >
             <VStack paddingX={3}>
                 <VStack w="full" mt={3} p={5} bg="gray.600">
                     <HStack w="full" alignItems="center" space={2}> 
-                        <User color="purple" size={15}/>
+                        <User color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} >ALUNO</Heading>
                     </HStack>
                     <Heading color="gray.100" fontSize={14} mt={1}>{userFake.name.toUpperCase()}</Heading>
                 </VStack>
                 <VStack w="full" mt={3} p={5} bg="gray.600">
                     <HStack w="full" alignItems="center" space={2}> 
-                        <ListChecks color="purple" size={15}/>
+                        <ListChecks color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} >DISCIPLINAS</Heading>
                     </HStack>
                     {userFake.disciplinas.map((item) => 
@@ -72,48 +111,11 @@ export function Details() {
                     
                 </VStack>
                 <HStack w="full" mt={3} p={5} bg="gray.600" space={2}> 
-                        <CircleWavyCheck color="purple" size={15}/>
+                        <CircleWavyCheck color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
                 </HStack>
-                <VStack w="full" mt={3} p={5} bg="gray.600">
-                    <Heading color="gray.300" fontSize={12} >Nota</Heading>
-                    <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
-                        <Input 
-                            mb={4}
-                            placeholder="Atividades"                    
-                            w={110}                   
-                        />
-                        <Input 
-                            mb={4}
-                            placeholder="Nota" 
-                            w={110}                   
-                        />
-                        <Input 
-                            mb={4}
-                            placeholder="Total"                    
-                            w={110}               
-                        />
-                    </HStack>
-                
-                    <Heading color="gray.300" fontSize={12} >Nota</Heading>
-                    <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
-                        <Input 
-                            mb={4}
-                            placeholder="Atividades"                    
-                            w={110}                   
-                        />
-                        <Input 
-                            mb={4}
-                            placeholder="Nota" 
-                            w={110}                   
-                        />
-                        <Input 
-                            mb={4}
-                            placeholder="Total"                    
-                            w={110}                   
-                        />
-                    </HStack>
-                    
+                <VStack w="full" mt={3} p={5} bg="gray.600">                               
+                    {listNotes()}                    
                 </VStack>
                 <Button title="Fechar" mt={4} mb={4}/>   
             </VStack>

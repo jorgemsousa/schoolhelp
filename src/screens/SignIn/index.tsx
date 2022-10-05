@@ -106,7 +106,7 @@ export function SignIn(){
         justifyContent="space-between" 
       >
         <Text 
-          color="fuchsia.500" 
+          color="primary.700" 
           fontSize={11} 
           onPress={handleNewRegister}
         >
@@ -114,7 +114,7 @@ export function SignIn(){
         </Text>
         
         <Text 
-          color="fuchsia.500" 
+          color="primary.700" 
           fontSize={11} 
           onPress={handleForgot}
         >
