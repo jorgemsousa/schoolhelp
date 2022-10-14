@@ -17,8 +17,8 @@ import {
 
 import { Header } from "../../components/Header";
 import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
 import { ButtonSecondary } from '../../components/ButtonSecondary';
+import { ListsNotes } from '../../components/ListsNotes';
 
 
 type RouteParams = {
@@ -48,26 +48,7 @@ export function Details() {
     const listNotes = () => {
        
         for (let i = 1; i <= userFake.notas; i++) {
-            <>
-                <Heading color="gray.300" fontSize={12} >Nota {i}</Heading>
-                <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}> 
-                    <Input 
-                        mb={4}
-                        placeholder="Atividades"                    
-                        w={110}                   
-                    />
-                    <Input 
-                        mb={4}
-                        placeholder="Nota" 
-                        w={110}                   
-                    />
-                    <Input 
-                        mb={4}
-                        placeholder="Total"                    
-                        w={110}               
-                    />
-                </HStack> 
-            </>
+           <ListsNotes />
         }
     }
 
