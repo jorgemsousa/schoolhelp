@@ -28,9 +28,9 @@ export function SignIn(){
     setIsLoading(true);
     
     auth().signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      setIsLoading(false);
+    .then(() => {
       clearCredentials();
+      setIsLoading(false);
     })
     .catch((error) => {
       Alert.alert('SignIn', 'E-mail ou Senha Inválidos.');

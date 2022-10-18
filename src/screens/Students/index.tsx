@@ -36,6 +36,24 @@ export function Students() {
         setResultSubject([])
     }
 
+    const student = {
+        name: name,
+        year: year,
+        school: school,
+        series: series,
+        grades: grades,
+        media: media,
+        subject: {
+            name: subject,
+            notas: [
+                {
+                    activity: 0,
+                    nota: 0
+                }
+            ]
+        }
+    }
+
     return(
         <VStack flex={1} p={4} bg="gray.600">
             <ScrollView>

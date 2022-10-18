@@ -19,6 +19,7 @@ import { Header } from "../../components/Header";
 import { Button } from '../../components/Button';
 import { ButtonSecondary } from '../../components/ButtonSecondary';
 import { ListsNotes } from '../../components/ListsNotes';
+import { Input } from "../../components/Input";
 
 
 type RouteParams = {
@@ -42,13 +43,26 @@ export function Details() {
         series: "5 Periodo",
         notas: 4,
         media: 6,
-        disciplinas: ["Portugues", "Matematica"],
+        disciplinas: [
+            { disciplina: "Portugues", notas: [
+                {nota1:"nota1", atividade1: "atividade1"}, 
+                {nota1:"nota1", atividade1: "atividade1"},
+                {nota1:"nota1", atividade1: "atividade1"},
+                {nota1:"nota1", atividade1: "atividade1"}
+            ]}, 
+            { disciplina: "Matematica", notas: [
+                {nota1:"6", atividade1: "3"}, 
+                {nota1:"nota1", atividade1: "atividade1"},
+                {nota1:"nota1", atividade1: "atividade1"},
+                {nota1:"nota1", atividade1: "atividade1"}
+            ]}
+            
+        ],
     }
     
-    const listNotes = () => {
-       
+    const listNotes = () => {       
         for (let i = 1; i <= userFake.notas; i++) {
-           <ListsNotes />
+           return <ListsNotes />
         }
     }
 
@@ -86,7 +100,7 @@ export function Details() {
                         <Heading color="gray.300" fontSize={12} >DISCIPLINAS</Heading>
                     </HStack>
                     {userFake.disciplinas.map((item) => 
-                        <ButtonSecondary title={item.toUpperCase()}  state={false} key={item} />
+                        <ButtonSecondary title={item.disciplina.toUpperCase()}  state={false} key={item.disciplina} />
                     )}
                     
                 </VStack>
@@ -94,10 +108,40 @@ export function Details() {
                         <CircleWavyCheck color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
                 </HStack>
-                <VStack w="full" mt={3} p={5} bg="gray.600">                               
-                    {listNotes()}                    
+                <VStack w="full" mt={3} p={5} bg="gray.600">                      
+                    {userFake.disciplinas.map((item) => 
+                        item.notas.map((nota) => (
+                            <>   
+                                <HStack w="full" alignItems="center" space={2} mt={1} ml={-2}>                        
+                                    <Input 
+                                        mb={4}
+                                        placeholder="Atividade"                    
+                                        w={110}    
+                                        keyboardType="decimal-pad"
+                                        value={nota.atividade1} 
+                                    />
+                                    <Input 
+                                        mb={4}
+                                        placeholder="Nota"                    
+                                        w={110}    
+                                        keyboardType="decimal-pad"
+                                        value={nota.nota1} 
+                                    />
+                                    <Input 
+                                        mb={4}
+                                        placeholder="Total"                    
+                                        w={110}  
+                                        value={(parseFloat(nota.nota1) + parseFloat(nota.atividade1)).toString() }           
+                                    />
+                                </HStack>
+                            </>
+                        ))
+                    )}             
                 </VStack>
-                <Button title="Fechar" mt={4} mb={4}/>   
+                <HStack w="full" alignItems="center" space={2} justifyContent="space-between">
+                    <Button title="Salvar" w="55%" mt={4} mb={4}/>   
+                    <Button title="Fechar" w="40%" mt={4} mb={4} bg={colors.green[900]}/>   
+                </HStack>
             </VStack>
         </ScrollView>
     </VStack>
