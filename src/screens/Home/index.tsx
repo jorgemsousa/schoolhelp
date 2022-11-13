@@ -85,7 +85,7 @@ export function Home() {
       <VStack flex={1} px={6}>
         <HStack 
           w="full" 
-          mt={8}
+          mt={4}
           mb={4}
           justifyContent="space-between"
           alignItems="center"

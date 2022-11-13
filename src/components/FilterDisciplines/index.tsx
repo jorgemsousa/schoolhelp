@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {IButtonProps} from 'native-base';
+import {HStack, IButtonProps} from 'native-base';
 import { ButtonSecondary } from '../ButtonSecondary'
 type Props = IButtonProps & {
   title: string;
@@ -7,13 +7,14 @@ type Props = IButtonProps & {
 }
 
 export function FilterDisciplines({ title, isActive, ...rest }: Props) {
-  const [press, setpress] = useState(isActive);
+  const [press, setpress] = useState(false);
 
   return (
-    <ButtonSecondary 
-      state={press} 
-      title={title} 
-      onPress={() => setpress(!press)}
-    />     
+      <ButtonSecondary 
+        state={press} 
+        title={title} 
+        onPress={() => setpress(!press)}
+        {...rest}
+      />    
   );
 }

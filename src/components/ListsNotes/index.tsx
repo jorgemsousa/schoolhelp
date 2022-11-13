@@ -21,7 +21,7 @@ type Props = IPressableProps & {
 export function ListsNotes({data, ...rest}: Props) {
   const [activity, setActivity] = useState('');
   const [note, setNote] = useState(data);
-
+  console.log(note)
   return (
     <>    
         <Heading color="gray.300" fontSize={12} >Nota</Heading>

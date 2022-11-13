@@ -2,6 +2,7 @@ import { Button as ButtonNativeBase, IButtonProps, Heading } from 'native-base';
 
 type Props = IButtonProps & {
   title: string
+  bg?: string
 }
 
 export function Button({ title, bg, ...rest }: Props) {

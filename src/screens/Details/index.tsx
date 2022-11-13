@@ -6,9 +6,6 @@ import {
     VStack, 
     useTheme, 
     ScrollView,
-    Text, 
-    FlatList,
-    Center,
 } from "native-base";
 
 import { 
@@ -20,10 +17,8 @@ import {
 
 import { Header } from "../../components/Header";
 import { Button } from '../../components/Button';
-import { ButtonSecondary } from '../../components/ButtonSecondary';
 import { FilterDisciplines } from '../../components/FilterDisciplines'
-import { ListsNotes } from '../../components/ListsNotes';
-import { Input } from "../../components/Input";
+
 
 
 type RouteParams = {
@@ -37,8 +32,6 @@ export function Details() {
     const { id } = route.params as RouteParams;
 
     const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-    const [stateButton, setStateButton] = useState(false)
-    const [dados, setDados] = useState([])
 
     const userFake = {
         id: "uuid-123-5467",
@@ -65,7 +58,23 @@ export function Details() {
                 {nota:"", atividade: ""},
                 {nota:"", atividade: ""}
               ]
-            }            
+            },
+            { disciplina: "História", 
+              notas: [
+                {nota:"6", atividade: "2"}, 
+                {nota:"", atividade: ""},
+                {nota:"", atividade: ""},
+                {nota:"", atividade: ""}
+              ]
+            }, 
+            { disciplina: "Geografia", 
+              notas: [
+                {nota:"6", atividade: "3"}, 
+                {nota:"4", atividade: ""},
+                {nota:"", atividade: ""},
+                {nota:"", atividade: ""}
+              ]
+            }           
         ],
     }
     
@@ -73,7 +82,6 @@ export function Details() {
        const data = userFake.disciplinas.filter((item) => item.disciplina === disciplina).map((nota) => {
             nota.notas
        })
-       setDados(data);
     }
 
     return(
@@ -108,63 +116,21 @@ export function Details() {
                     <HStack w="full" alignItems="center" space={2}> 
                         <ListChecks color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} textTransform="uppercase" >disciplinas</Heading>
-                    </HStack>                    
-                    <FlatList 
-                        data={userFake.disciplinas}
-                        keyExtractor={item => item.disciplina}
-                        renderItem={({item}) => <FilterDisciplines title={item.disciplina} isActive={stateButton} onPress={() => handleOpenNotes(item.disciplina)}/>}
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
-                        ListEmptyComponent={() => (
-                            <Center mt={4}>                            
-                                <Text 
-                                    color="gray.300"
-                                    fontSize="xl"
-                                    mt={6}
-                                    textAlign="center"
-                                >
-                                    Você ainda não possui {'\n'}
-                                    Alunos {statusSelected === 'open' ? 'em andamento!' : 'finalizados'}
-                                </Text>
-                            </Center>
-                        )}
-                    />
+                    </HStack>     
+                    <HStack w="full" alignItems="flex-start" space={1} flexWrap="wrap"> 
+                        {userFake.disciplinas.map((item) => (
+                            <FilterDisciplines 
+                                key={item.disciplina}
+                                title={item.disciplina} 
+                            />                        
+                        ))}                       
+                    </HStack>                 
                 </VStack>
                 <HStack w="full" mt={3} p={5} bg="gray.600" space={2}> 
                         <CircleWavyCheck color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
                 </HStack>
-                <VStack w="full" mt={3} p={5} bg="gray.600">                      
-                    {
-                        dados.map((nota) => (
-                            <>   
-                                <HStack w="full" alignItems="center" space={2} ml={-2} justifyContent="space-between">                        
-                                    <Input 
-                                        mb={4}
-                                        placeholder="Atividade"                    
-                                        w={100}    
-                                        keyboardType="decimal-pad"
-                                        value={nota.atividade} 
-                                    />
-                                    <Input 
-                                        mb={4}
-                                        placeholder="Nota"                    
-                                        w={100}    
-                                        keyboardType="decimal-pad"
-                                        value={nota.nota} 
-                                    />
-                                    <Input 
-                                        mb={4}
-                                        placeholder="Total"                    
-                                        w={100}  
-                                        value={nota.nota !== "" || nota.atividade !== "" ? (parseFloat(nota.nota || "0") + parseFloat(nota.atividade || "0")).toString() : ""} 
-                                        color={parseFloat(nota.nota || "0")+parseFloat(nota.atividade || "0") >= userFake.media ? `${colors.green[600]}` : `${colors.red[600]}`}          
-                                    />
-                                </HStack>
-                            </>
-                        ))
-                    }             
-                </VStack>
+                
                 {
                     statusSelected === 'open' ?
                         <HStack w="full" alignItems="center" space={2} justifyContent="space-between">

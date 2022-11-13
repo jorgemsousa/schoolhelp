@@ -105,21 +105,21 @@ export function SignIn(){
         w="full" 
         justifyContent="space-between" 
       >
-        <Text 
+        <Heading 
           color="primary.700" 
           fontSize={11} 
           onPress={handleNewRegister}
         >
           Novo Cadastro
-        </Text>
+        </Heading>
         
-        <Text 
+        <Heading 
           color="primary.700" 
           fontSize={11} 
           onPress={handleForgot}
         >
           Recuperar Senha
-        </Text>
+        </Heading>
       </HStack>
     </VStack>    
   );
