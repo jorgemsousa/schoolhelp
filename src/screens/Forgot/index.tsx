@@ -16,7 +16,7 @@ export function Forgot(){
   return(
     <>
       <Header title='Recuperar senha'/>
-      <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={10} >
+      <VStack flex={1} alignItems="center" bg="gray.600" px={8} >
         <Logo />
         <Image />
         <Heading color="gray.100" fontSize="xl" mt={6} mb={6}>
