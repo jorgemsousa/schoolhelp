@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {HStack, IButtonProps} from 'native-base';
 import { ButtonSecondary } from '../ButtonSecondary'
+import { ListProps } from '../Lists';
 type Props = IButtonProps & {
   title: string;
   isActive?: boolean;

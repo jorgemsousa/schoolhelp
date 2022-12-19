@@ -18,6 +18,9 @@ import {
 import { Header } from "../../components/Header";
 import { Button } from '../../components/Button';
 import { FilterDisciplines } from '../../components/FilterDisciplines'
+import { ListsNotes } from "../../components/ListsNotes";
+import { ButtonSecondary } from "../../components/ButtonSecondary";
+import { Input } from '../../components/Input';
 
 
 
@@ -32,7 +35,8 @@ export function Details() {
     const { id } = route.params as RouteParams;
 
     const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-
+    const [pressed, setPressed] = useState('');
+    const [note, setNote] = useState([]);
     const userFake = {
         id: "uuid-123-5467",
         name: "Jorge Sousa",
@@ -43,7 +47,7 @@ export function Details() {
         notas: 4,
         media: 6,
         disciplinas: [
-            { disciplina: "Portugues", 
+            { disciplina: "Quimica", 
               notas: [
                 {nota:"6", atividade: "2"}, 
                 {nota:"", atividade: ""},
@@ -51,7 +55,7 @@ export function Details() {
                 {nota:"", atividade: ""}
               ]
             }, 
-            { disciplina: "Matematica", 
+            { disciplina: "Ciências", 
               notas: [
                 {nota:"6", atividade: "3"}, 
                 {nota:"4", atividade: ""},
@@ -74,13 +78,21 @@ export function Details() {
                 {nota:"", atividade: ""},
                 {nota:"", atividade: ""}
               ]
-            }           
+            }, 
+            { disciplina: "Inglês", 
+              notas: [
+                {nota:"6", atividade: "3"}, 
+                {nota:"4", atividade: "2"},
+                {nota:"", atividade: ""},
+                {nota:"", atividade: ""}
+              ]
+            }            
         ],
     }
-    
+
     function handleOpenNotes(disciplina: string) {       
-       const data = userFake.disciplinas.filter((item) => item.disciplina === disciplina).map((nota) => {
-            nota.notas
+       userFake.disciplinas.filter((item) => item.disciplina === disciplina).map((nota) => {            
+            setNote(nota.notas);
        })
     }
 
@@ -112,25 +124,63 @@ export function Details() {
                     </HStack>
                     <Heading color="gray.100" fontSize={14} mt={1}>{userFake.name.toUpperCase()}</Heading>
                 </VStack>
-                <VStack w="full" mt={3} p={5} bg="gray.600">
+                <VStack w="full" mt={3} p={2} bg="gray.600">
                     <HStack w="full" alignItems="center" space={2}> 
                         <ListChecks color={colors.primary[700]} size={15}/>
                         <Heading color="gray.300" fontSize={12} textTransform="uppercase" >disciplinas</Heading>
                     </HStack>     
                     <HStack w="full" alignItems="flex-start" space={1} flexWrap="wrap"> 
                         {userFake.disciplinas.map((item) => (
-                            <FilterDisciplines 
+                            <ButtonSecondary 
                                 key={item.disciplina}
                                 title={item.disciplina} 
+                                state={pressed === item.disciplina ? true : false}
+                                onPress={() => {
+                                    handleOpenNotes(item.disciplina); 
+                                    setPressed(item.disciplina);
+                                }}
                             />                        
                         ))}                       
                     </HStack>                 
                 </VStack>
                 <HStack w="full" mt={3} p={5} bg="gray.600" space={2}> 
-                        <CircleWavyCheck color={colors.primary[700]} size={15}/>
-                        <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
-                </HStack>
-                
+                    <CircleWavyCheck color={colors.primary[700]} size={15}/>
+                    <Heading color="gray.300" fontSize={12} >HISTÓRICO DE NOTAS</Heading>
+                </HStack>                                      
+                <VStack w="full" mt={3} p={2} bg="gray.600">  
+                { note.length > 0 ?
+                    note.map((item, index) => { return (
+                        <>
+                            <Heading color="gray.300" fontSize={12} >{index + 1}ª Avaliação</Heading>
+                            <HStack w="full" alignItems="center" space={2} justifyContent="space-between">                        
+                                <Input 
+                                    mb={4}
+                                    placeholder="Atividade"                    
+                                    w={100}    
+                                    keyboardType="decimal-pad"
+                                    value={item.atividade}
+                                />
+                                <Input 
+                                    mb={4}
+                                    placeholder="Nota"                    
+                                    w={100}    
+                                    keyboardType="decimal-pad"
+                                    value={item.nota}
+                                />
+                                <Input 
+                                    mb={4}
+                                    placeholder="Total"                    
+                                    w={100}  
+                                    value={
+                                        (parseFloat(item.atividade) + parseFloat(item.nota)).toString()
+                                    }
+                                />
+                            </HStack>
+                        </>
+                    )
+                    }
+                ) : <Heading color="gray.300" fontSize={12}>Selecione uma disciplina para ver as notas!</Heading> }  
+                </VStack>                  
                 {
                     statusSelected === 'open' ?
                         <HStack w="full" alignItems="center" space={2} justifyContent="space-between">

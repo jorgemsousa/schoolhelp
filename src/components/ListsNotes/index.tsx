@@ -21,7 +21,6 @@ type Props = IPressableProps & {
 export function ListsNotes({data, ...rest}: Props) {
   const [activity, setActivity] = useState('');
   const [note, setNote] = useState(data);
-  console.log(note)
   return (
     <>    
         <Heading color="gray.300" fontSize={12} >Nota</Heading>
@@ -31,21 +30,17 @@ export function ListsNotes({data, ...rest}: Props) {
                 placeholder="Atividade"                    
                 w={100}    
                 keyboardType="decimal-pad"
-                value={data.disciplinas.notas} 
             />
             <Input 
                 mb={4}
                 placeholder="Nota"                    
                 w={100}    
                 keyboardType="decimal-pad"
-                value={note.nota} 
             />
             <Input 
                 mb={4}
                 placeholder="Total"                    
                 w={100}  
-                value={note.nota !== "" || note.atividade !== "" ? (parseFloat(note.nota || "0") + parseFloat(note.atividade || "0")).toString() : ""} 
-                color={parseFloat(note.nota || "0")+parseFloat(note.atividade || "0") >= data.media ? `${colors.green[300]}` : `${colors.red[600]}`}          
             />
         </HStack>
     </>

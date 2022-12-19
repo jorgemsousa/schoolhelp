@@ -9,6 +9,7 @@ export function ButtonSecondary({ title, state, ...rest }) {
       borderColor={state ? 'green.300' : 'purple.700'}
       fontSize="sm"
       rounded="sm"
+      minWidth={100}
       mt={2}
       _pressed={{ bg: "gray.600" }}
       { ...rest }

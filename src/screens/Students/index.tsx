@@ -125,9 +125,11 @@ export function Students() {
                     />
                     
                 </HStack>
-                {resultSubject.map((item) => 
-                    <ButtonSecondary title={item}  state={false} key={item} />
-                )}
+                <HStack w="full" alignItems="flex-start" space={1} flexWrap="wrap" > 
+                    {resultSubject.map((item) => 
+                        <ButtonSecondary title={item}  state={false} key={item}/>
+                    )}
+                </HStack>
 
                 <Button 
                     title="Cadastrar"
