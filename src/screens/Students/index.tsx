@@ -12,6 +12,7 @@ import { ButtonSecondary } from "../../components/ButtonSecondary";
 import { Header } from '../../components/Header';
 import { Input } from "../../components/Input";
 import { PlusCircle } from 'phosphor-react-native'
+import { Alert } from "react-native";
 
 export function Students() {
     const [name, setName] = useState('');
@@ -43,15 +44,26 @@ export function Students() {
         series: series,
         grades: grades,
         media: media,
-        subject: {
-            name: subject,
-            notas: [
-                {
-                    activity: 0,
-                    nota: 0
+        subjects: [
+            {
+                name: subject,
+                notas: {
+                    nota: 0,
+                    activity: 0
                 }
-            ]
+            }
+        ]
+    }
+
+    function notesOfSubject(notes: number){
+        let notas = [];
+        for(let i = 1; i <= notes; i++){
+           notas[i] = {
+             nota: 0,
+             activity: 0
+           }
         }
+        return notas;
     }
 
     return(
@@ -135,7 +147,10 @@ export function Students() {
                     title="Cadastrar"
                     w="full"
                     mt={4}
-                    onPress={clearStates}
+                    onPress={() => {
+                        clearStates();
+                        Alert.alert(JSON.stringify(notesOfSubject(4)))
+                    }}
                 />
             </ScrollView>   
         </VStack>

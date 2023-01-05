@@ -183,10 +183,10 @@ export function Details() {
                 </VStack>                  
                 {
                     statusSelected === 'open' ?
-                        <HStack w="full" alignItems="center" space={2} justifyContent="space-between">
-                            <Button title="Salvar" w="55%" mt={4} mb={4}/>   
-                            <Button title="Fechar" w="40%" mt={4} mb={4} bg={colors.green[900]}/>   
-                        </HStack>
+                        <VStack w="full" alignItems="center" space={2} justifyContent="space-between">
+                            <Button title="Salvar" w="100%" mt={4} mb={1}/>   
+                            <Button title="Fechar" w="100%" mt={1} mb={4} bg={colors.green[900]}/>   
+                        </VStack>
                     : null
                 }
             </VStack>
