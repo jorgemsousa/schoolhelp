@@ -6,13 +6,13 @@ import {
     ScrollView
 } from "native-base";
 import { useState } from "react";
+import {} from "react-hook-form";
+
 import { Button } from "../../components/Button";
 import { ButtonSecondary } from "../../components/ButtonSecondary";
-
 import { Header } from '../../components/Header';
 import { Input } from "../../components/Input";
 import { PlusCircle } from 'phosphor-react-native'
-import { Alert } from "react-native";
 
 export function Students() {
     const [name, setName] = useState('');
@@ -62,7 +62,6 @@ export function Students() {
     }
 
     function saveStudent(){       
-        
         const student = {
             name: name,
             year: year,
