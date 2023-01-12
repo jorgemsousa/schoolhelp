@@ -37,33 +37,42 @@ export function Students() {
         setResultSubject([])
     }
 
-    const student = {
-        name: name,
-        year: year,
-        school: school,
-        series: series,
-        grades: grades,
-        media: media,
-        subjects: [
-            {
-                name: subject,
-                notas: {
-                    nota: 0,
-                    activity: 0
-                }
-            }
-        ]
-    }
-
     function notesOfSubject(notes: number){
         let notas = [];
         for(let i = 1; i <= notes; i++){
-           notas[i] = {
-             nota: 0,
-             activity: 0
-           }
+            notas.push(
+                {
+                    atividade: 0,
+                    nota: 0
+                }
+            ) 
         }
         return notas;
+    }
+
+    function subjects(notes: number){
+        const notas = notesOfSubject(notes)
+        const subjectsNotes = {
+            disciplines: resultSubject.map((item) => ({
+                name: item,
+                notas: notas
+            }))
+        }
+        return subjectsNotes.disciplines;
+    }
+
+    function saveStudent(){       
+        
+        const student = {
+            name: name,
+            year: year,
+            school: school,
+            series: series,
+            grades: grades,
+            media: media,
+            subjects: subjects(parseInt(grades)),
+        }        
+        console.log(student)
     }
 
     return(
@@ -82,6 +91,7 @@ export function Students() {
                     w="full"
                     mt={5}
                     value={year}
+                    keyboardType="decimal-pad"
                     onChangeText={setYear}
                 />
                 <Input 
@@ -114,7 +124,7 @@ export function Students() {
                     keyboardType="decimal-pad"
                     onChangeText={setMedia}
                 />
-                <HStack   alignItems="center" maxWidth='90%'>
+                <HStack alignItems="center" maxWidth='90%'>
                     <Input 
                         placeholder="Disciplinas"
                         w="full"
@@ -131,11 +141,13 @@ export function Students() {
                         }
                         mt={5}
                         onPress={() => {
-                            setResultSubject([...resultSubject, subject.toUpperCase()]);
-                            setSubject('');
+                            subject != '' ? (
+                                setResultSubject([...resultSubject, subject.toUpperCase()]),
+                                setSubject('')
+                            )
+                            : false
                         }}
                     />
-                    
                 </HStack>
                 <HStack w="full" alignItems="flex-start" space={1} flexWrap="wrap" > 
                     {resultSubject.map((item) => 
@@ -149,7 +161,7 @@ export function Students() {
                     mt={4}
                     onPress={() => {
                         clearStates();
-                        Alert.alert(JSON.stringify(notesOfSubject(4)))
+                        saveStudent()
                     }}
                 />
             </ScrollView>   
