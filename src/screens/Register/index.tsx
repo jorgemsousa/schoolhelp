@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { VStack, Heading, Icon, useTheme } from "native-base";
+import auth from "@react-native-firebase/auth";
 
 import Logo from '../../assets/logo_primary_.svg';
 import Image from '../../assets/image.svg';
@@ -8,12 +9,29 @@ import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { Envelope, Key, UserCirclePlus } from 'phosphor-react-native';
 import { Header } from '../../components/Header';
+import { Alert } from 'react-native';
 
 export function Register(){
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { colors } = useTheme();
+
+  function handleNewUser(){
+    if(!email || !password){
+      return Alert.alert("Novo Usuário", "Todos os campos são obrigatórios!");
+    }
+
+    auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      Alert.alert("Novo Usuário", "Usuário cadastrado com sucesso")
+    })
+    .catch((error) => {
+      console.log(error)
+      return Alert.alert("Erro", "Erro ao cadastrar usuário")
+    })
+  }
 
   return(
     <>
@@ -59,7 +77,8 @@ export function Register(){
 
         <Button 
           title="Cadastrar"
-          w="full"        
+          w="full" 
+          onPress={handleNewUser}       
         />
         
       </VStack>  

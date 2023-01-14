@@ -6,13 +6,16 @@ import {
     ScrollView,
 } from "native-base";
 import { useState } from "react";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
 
 import { Button } from "../../components/Button";
 import { ButtonSecondary } from "../../components/ButtonSecondary";
 import { Header } from '../../components/Header';
 import { Input } from "../../components/Input";
 import { Plus } from 'phosphor-react-native'
-import { Alert } from "react-native";
+
 
 type FormProps = {
     name: string,
@@ -25,6 +28,8 @@ type FormProps = {
 }
 
 export function Students() {
+    const navigation = useNavigation(); 
+
     const [name, setName] = useState('');
     const [year, setYear] = useState('');
     const [school, setSchool] = useState('');
@@ -33,6 +38,9 @@ export function Students() {
     const [media, setMedia] = useState('');
     const [subject, setSubject] = useState('');
     const [resultSubject, setResultSubject] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const { colors } = useTheme();
 
@@ -72,22 +80,48 @@ export function Students() {
         return subjectsNotes.disciplines;
     }
 
-    function saveStudent(){     
-        if(name != '' && year != '' && school != '' && series != '' && grades != '' && media != '' && subjects.length > 0){
-            const student = {
-                name: name,
-                year: year,
-                school: school,
-                series: series,
-                grades: grades,
-                media: media,
-                subjects: subjects(parseInt(grades)),
-            }        
-            console.log(student);
-            clearStates();
-        }else{
-            Alert.alert("Todos os campos são obrigatórios")
+    function handleNewStudent(){     
+        if(!name && !year && !school && !series && !grades && !media && subjects.length > 0){
+            return Alert.alert("Aviso", "Todos os campos são obrigatórios")
         }
+
+        setIsLoading(true);
+       
+        const student = {
+            name: name,
+            year: year,
+            school: school,
+            series: series,
+            grades: grades,
+            media: media,
+            subjects: subjects(parseInt(grades)),
+        }        
+
+        firestore()
+        .collection("students")
+        .add({
+            name: name,
+            year: year,
+            school: school,
+            series: series,
+            grades: grades,
+            media: media,
+            subjects: subjects(parseInt(grades)),
+            status: 'open',
+            created_at: firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            Alert.alert("Aluno", "Aluno cadastrado com sucesso!");
+            navigation.goBack();
+        })
+        .catch((error) => {
+            console.log(error);
+            setIsLoading(false);
+            clearStates();
+            return Alert.alert("Erro", "Cadastro não efetuado")
+        })
+
+
     }
 
     return(
@@ -158,6 +192,7 @@ export function Students() {
                                 <Plus 
                                     size={16} 
                                     color={colors.gray[300]} 
+                                    weight="bold"
                                 />
                             }
                             onPress={() => {
@@ -181,7 +216,8 @@ export function Students() {
                     title="Cadastrar"
                     w="full"
                     mt={4}
-                    onPress={saveStudent}
+                    isLoading={isLoading}    
+                    onPress={handleNewStudent}
                 />
             </ScrollView>   
         </VStack>
