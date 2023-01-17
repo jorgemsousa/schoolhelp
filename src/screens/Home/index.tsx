@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { 
   HStack, 
@@ -12,33 +12,26 @@ import {
 } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import { Alert } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 import { ChatTeardropText } from 'phosphor-react-native'
 import { SignOut } from 'phosphor-react-native'
 
 import Logo from '../../assets/logosecondary.svg'
 
+import { dateFormat } from '../../utils/ferestoreDateFormat';
+
 import { Filter } from '../../components/Filter'
 import { Button } from '../../components/Button'
 import { Lists, ListProps } from '../../components/Lists'
+import { Loading } from '../../components/Loading';
 
 export function Home() {
   const navigation = useNavigation();
 
+  const [isLoading, setIsLoading] = useState(true)
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-  const [students, setStudents] = useState<ListProps[]>([
-    {
-      id: "uuid-123-5467",
-      name: "Jorge Sousa",
-      when: "2022",
-      status: 'open',
-      school: "UFS",
-      series: "5 Periodo",
-      notas: 4,
-      media: 6,
-      disciplinas: ["Portugues", "Matematica"],
-    },
-  ])
+  const [students, setStudents] = useState<ListProps[]>([])
 
   function handleNewStudent() {
     navigation.navigate("new");
@@ -58,6 +51,27 @@ export function Home() {
   }
 
   const { colors } = useTheme();
+
+  useEffect(() => {
+    setIsLoading(true)
+    const subscriber = firestore()
+    .collection('students')
+    .where('status', '==', statusSelected)
+    .onSnapshot(snapshot => {
+      const data = snapshot.docs.map( doc => {
+        const {status, name, created_at} = doc.data()
+        return {
+          id: doc.id,
+          status,
+          name,
+          when: dateFormat(created_at)
+        }
+      })
+      setStudents(data);
+      setIsLoading(false)
+    })
+    return subscriber;
+  }, [statusSelected])
 
   return (
     <VStack flex={1} pb={6} bg="gray.700">
@@ -111,30 +125,36 @@ export function Home() {
             isActive={statusSelected === 'closed'}
           />
         </HStack>
-        <FlatList 
-          data={students}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <Lists data={item} onPress={() => handleOpenDetails(item.id)} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
-          ListEmptyComponent={() => (
-            <Center mt={4}>
-              <ChatTeardropText 
-                size={40} 
-                color={colors.gray[300]} 
-              />
-              <Text 
-                color="gray.300"
-                fontSize="xl"
-                mt={6}
-                textAlign="center"
-              >
-                Você ainda não possui {'\n'}
-                Alunos {statusSelected === 'open' ? 'em andamento!' : 'finalizados'}
-              </Text>
-            </Center>
-          )}
-        />
+        {
+          isLoading 
+          ? 
+            <Loading /> 
+          :
+            <FlatList 
+              data={students}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => <Lists data={item} onPress={() => handleOpenDetails(item.id)} />}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{paddingTop: 10, paddingBottom: 100}}
+              ListEmptyComponent={() => (
+                <Center mt={4}>
+                  <ChatTeardropText 
+                    size={40} 
+                    color={colors.gray[300]} 
+                  />
+                  <Text 
+                    color="gray.300"
+                    fontSize="xl"
+                    mt={6}
+                    textAlign="center"
+                  >
+                    Você ainda não possui {'\n'}
+                    Alunos {statusSelected === 'open' ? 'em andamento!' : 'finalizados'}
+                  </Text>
+                </Center>
+              )}
+            />
+        }
         <Button title="Novo Aluno" onPress={handleNewStudent}/>
       </VStack>
     </VStack>

@@ -17,9 +17,9 @@ export type ListProps = {
   status: 'open' | 'closed';
   school: string;
   series: string;
-  notas: number;
+  grades: number;
   media: number;
-  disciplinas: string[];
+  subjects: string[];
 }
 
 type Props = IPressableProps & {

@@ -12,7 +12,7 @@ import { Header } from '../../components/Header';
 import { Alert } from 'react-native';
 
 export function Register(){
-  const [name, setName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { colors } = useTheme();
@@ -21,10 +21,10 @@ export function Register(){
     if(!email || !password){
       return Alert.alert("Novo Usuário", "Todos os campos são obrigatórios!");
     }
-
     auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(() => {
+    .then((response) => {
+      console.log(response)
       Alert.alert("Novo Usuário", "Usuário cadastrado com sucesso")
     })
     .catch((error) => {
@@ -39,10 +39,10 @@ export function Register(){
       <VStack flex={1} alignItems="center" bg="gray.600" px={8} >
         <Logo />
         <Image />
-        <Heading color="gray.100" fontSize="xl" mt={6} mb={6}>
+        <Heading color="gray.100" fontSize="xl" mt={4} mb={4}>
           Cadastrar Usuário
         </Heading>
-
+        
         <Input 
           mb={4}
           placeholder="E-mail"
@@ -58,8 +58,9 @@ export function Register(){
             />
           }
         />
+
         <Input 
-          mb={8}
+          mb={4}
           placeholder="Senha"
           onChangeText={setPassword}
           InputLeftElement={

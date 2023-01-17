@@ -31,7 +31,6 @@ export function Students() {
     const navigation = useNavigation(); 
 
     const [name, setName] = useState('');
-    const [year, setYear] = useState('');
     const [school, setSchool] = useState('');
     const [series, setSeries] = useState('');
     const [grades, setGrades] = useState('');
@@ -47,7 +46,6 @@ export function Students() {
    
     function clearStates(){
         setName('')
-        setYear('')
         setSchool('')
         setSeries('')
         setGrades('')
@@ -61,8 +59,8 @@ export function Students() {
         for(let i = 1; i <= notes; i++){
             notas.push(
                 {
-                    atividade: 0,
-                    nota: 0
+                    atividade: "0",
+                    nota: "0"
                 }
             ) 
         }
@@ -81,31 +79,20 @@ export function Students() {
     }
 
     function handleNewStudent(){     
-        if(!name && !year && !school && !series && !grades && !media && subjects.length > 0){
+        if(!name && !school && !series && !grades && !media && subjects.length > 0){
             return Alert.alert("Aviso", "Todos os campos são obrigatórios")
         }
 
-        setIsLoading(true);
-       
-        const student = {
-            name: name,
-            year: year,
-            school: school,
-            series: series,
-            grades: grades,
-            media: media,
-            subjects: subjects(parseInt(grades)),
-        }        
+        setIsLoading(true);     
 
         firestore()
         .collection("students")
         .add({
-            name: name,
-            year: year,
-            school: school,
-            series: series,
-            grades: grades,
-            media: media,
+            name,
+            school,
+            series,
+            grades,
+            media,
             subjects: subjects(parseInt(grades)),
             status: 'open',
             created_at: firestore.FieldValue.serverTimestamp()
@@ -135,16 +122,7 @@ export function Students() {
                     mt={5}
                     value={name}
                     onChangeText={ setName }
-                />                  
-                
-                <Input 
-                    placeholder="Ano Letivo"
-                    w="full"
-                    mt={5}
-                    keyboardType="decimal-pad"
-                    value={year}
-                    onChangeText={ setYear }
-                />              
+                />                             
                          
                 <Input 
                     placeholder="Escola"
